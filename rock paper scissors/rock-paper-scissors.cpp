@@ -97,22 +97,28 @@ bool isPlayerWinner(const int livesPerRound = 3) {
 int main()
 {
     char playerChoice;
-    do {
-        if (isPlayerWinner(3))
-            std::cout << "You're winner, congrats!\n";
-        else
-            std::cout << "Computer won, AI > human now...\n";
-        while (true) {
-            std::cout << "Do you want to play again? (Y)es, (N)o: ";
-            std::cin >> playerChoice;
-            if (std::cin.fail()) {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cerr << "Error! You must enter a choice (Y)es or (N)o.\n";
+    try {
+        do {
+            if (isPlayerWinner(3))
+                std::cout << "You're winner, congrats!\n";
+            else
+                std::cout << "Computer won, AI > human now...\n";
+            while (true) {
+                std::cout << "Do you want to play again? (Y)es, (N)o: ";
+                std::cin >> playerChoice;
+                if (std::cin.fail()) {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cerr << "Error! You must enter a choice (Y)es or (N)o.\n";
+                }
+                else if (playerChoice == 'Y' || playerChoice == 'N')
+                    break;
             }
-            else if (playerChoice == 'Y' || playerChoice == 'N')
-                break;
-        }
-    } while (playerChoice != 'N');
+        } while (playerChoice != 'N');
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << e.what();
+    }
+    return 0;
 }
 
